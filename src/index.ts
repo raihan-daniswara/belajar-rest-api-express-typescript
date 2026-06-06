@@ -1,7 +1,5 @@
 import express, {
-  response,
   type Application,
-  type NextFunction,
   type Request,
   type Response,
 } from "express";
@@ -10,7 +8,7 @@ const app: Application = express();
 
 const port: number = 4000;
 
-app.use("/health", (req: Request, res: Response, next: NextFunction) => {
+app.use("/health", (req: Request, res: Response) => {
   res.status(200).send({
     status: 200,
   });
