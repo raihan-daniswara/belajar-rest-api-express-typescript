@@ -1,17 +1,18 @@
-import express, {
-  type Application,
-  type Request,
-  type Response,
-} from "express";
+import type { Application, Router } from "express";
+import { healthRouter } from "./routes/health";
+import { productsRouter } from "./routes/product";
 
-const app: Application = express();
+type AppRoute = [string, Router];
 
-const port: number = 4000;
+const _routes: AppRoute[] = [
+  ["/health", healthRouter],
+  ["/products", productsRouter],
+];
 
-app.use("/health", (req: Request, res: Response) => {
-  res.status(200).send({
-    status: 200,
+export const routes = (app: Application): void => {
+  _routes.forEach((route) => {
+    console.log(route);
+    const [url, router]: AppRoute = route;
+    app.use(url, router);
   });
-});
-
-app.listen(port, () => console.log(`server is listening on port ${port}`));
+};

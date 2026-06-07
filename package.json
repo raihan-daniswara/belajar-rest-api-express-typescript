@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun",
+    "dev": "bun --watch index.ts",
+    "build": "bun build index.ts --outdir dist --target bun",
     "start": "bun dist/index.js",
     "check-types": "tsc --noEmit",
     "prepare": "husky"
