@@ -1,53 +1,8 @@
-import { Router, type Request, type Response } from "express";
-import { logger } from "../utils/logger";
-import { createProductValidation } from "../validation/product.validation";
+import { Router } from "express";
+import { createProduct, getProduct } from "../controllers/product.controller";
 
 export const productsRouter: Router = Router();
 
-productsRouter.get("/", (req: Request, res: Response) => {
-  logger.info("Success get all product data");
-  res.status(200).json({
-    success: true,
-    statusCode: 200,
-    message: `Success get all product data`,
-    data: [
-      {
-        id: 1,
-        name: "Sepatu Sport",
-        price: 500000,
-      },
-      {
-        id: 2,
-        name: "Botol Minum",
-        price: 82000,
-      },
-      {
-        id: 3,
-        name: "Tas Sekolah",
-        price: 267000,
-      },
-    ],
-  });
-});
-
-productsRouter.post("/", (req: Request, res: Response) => {
-  const { error, value } = createProductValidation(req.body);
-
-  if (error) {
-    logger.error(`ERR: product - create failed = ${error.details[0]?.message}`);
-
-    return res.status(422).json({
-      success: false,
-      statusCode: 422,
-      message: error.details[0]?.message,
-    });
-  }
-
-  logger.info("Success add new product");
-  return res.status(200).json({
-    success: true,
-    statusCode: 200,
-    message: "Success add new product",
-    data: value,
-  });
-});
+productsRouter.get("/", getProduct);
+productsRouter.get("/:id", getProduct);
+productsRouter.post("/", createProduct);
