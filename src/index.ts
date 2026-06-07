@@ -1,6 +1,6 @@
 import type { Application, Router } from "express";
-import { healthRouter } from "./routes/health";
-import { productsRouter } from "./routes/product";
+import { healthRouter } from "./routes/health.route";
+import { productsRouter } from "./routes/product.route";
 
 type AppRoute = [string, Router];
 

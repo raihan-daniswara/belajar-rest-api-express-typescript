@@ -1,5 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { logger } from "../utils/logger";
+import { createProductValidation } from "../validation/product.validation";
 
 export const productsRouter: Router = Router();
 
@@ -30,11 +31,23 @@ productsRouter.get("/", (req: Request, res: Response) => {
 });
 
 productsRouter.post("/", (req: Request, res: Response) => {
+  const { error, value } = createProductValidation(req.body);
+
+  if (error) {
+    logger.error(`ERR: product - create failed = ${error.details[0]?.message}`);
+
+    return res.status(422).json({
+      success: false,
+      statusCode: 422,
+      message: error.details[0]?.message,
+    });
+  }
+
   logger.info("Success add new product");
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     statusCode: 200,
     message: "Success add new product",
-    data: req.body,
+    data: value,
   });
 });
