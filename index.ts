@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 const app: Application = express();
-const port: number = 4000;
+const port: number = Number(process.env.port);
 
 // parse body request
 app.use(bodyParser.urlencoded({ extended: false }));
