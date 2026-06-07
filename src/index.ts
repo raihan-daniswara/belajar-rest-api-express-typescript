@@ -11,7 +11,6 @@ const _routes: AppRoute[] = [
 
 export const routes = (app: Application): void => {
   _routes.forEach((route) => {
-    console.log(route);
     const [url, router]: AppRoute = route;
     app.use(url, router);
   });
