@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createProduct,
+  deleteProduct,
   getProduct,
   updateProduct,
 } from "../controllers/product.controller";
@@ -11,3 +12,4 @@ productsRouter.get("/", getProduct);
 productsRouter.get("/:id", getProduct);
 productsRouter.post("/", createProduct);
 productsRouter.put("/:id", updateProduct);
+productsRouter.delete("/:id", deleteProduct);

@@ -6,6 +6,7 @@ import {
 import { logger } from "../utils/logger";
 import {
   addProductToDB,
+  deleteProductByIdFromDB,
   getProductByIdFromDB,
   getProductFromDB,
   updateProductByIdFromDB,
@@ -33,7 +34,7 @@ export const createProduct = async (req: Request, res: Response) => {
         data: value,
       });
     } catch (error) {
-      logger.error(`ERR: product = create failed: ${error}`);
+      logger.error(`ERR: Product - Create failed: ${error}`);
       return res.status(422).json({
         success: false,
         statusCode: 422,
@@ -79,11 +80,11 @@ export const getProduct = async (
       data: products,
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(`ERR: Product - Get failed: ${error}`);
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: "Internal Server Error",
+      message: `${error}`,
     });
   }
 };
@@ -121,12 +122,44 @@ export const updateProduct = async (
         });
       }
     } catch (error) {
-      logger.error(error);
-      return res.status(500).json({
+      logger.error(`ERR: Product - Update failed: ${error}`);
+      return res.status(422).json({
         success: false,
-        statusCode: 500,
-        message: "Internal Server Error",
+        statusCode: 422,
+        message: `${error}`,
       });
     }
+  }
+};
+
+export const deleteProduct = async (
+  req: Request<{ id: string }>,
+  res: Response,
+) => {
+  const id = req.params.id;
+  try {
+    const data = await deleteProductByIdFromDB(id);
+    if (!data) {
+      logger.error("Product data not found");
+      return res.status(404).json({
+        success: false,
+        statusCode: 404,
+        message: "product data not found",
+      });
+    } else {
+      logger.info("Success delete product data");
+      return res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Success delete product data",
+      });
+    }
+  } catch (error) {
+    logger.error(`ERR: Product - Delete failed: ${error}`);
+    return res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: `${error}`,
+    });
   }
 };

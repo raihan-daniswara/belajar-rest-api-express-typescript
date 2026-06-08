@@ -35,3 +35,11 @@ export const updateProductByIdFromDB = async (
     throw error;
   }
 };
+export const deleteProductByIdFromDB = async (id: string) => {
+  try {
+    return await productModel.findOneAndDelete({ product_id: id });
+  } catch (error) {
+    logger.error(`Cannot delete data from MongoDB: \n${error}`);
+    throw error;
+  }
+};
