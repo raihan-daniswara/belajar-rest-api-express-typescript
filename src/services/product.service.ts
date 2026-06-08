@@ -13,11 +13,25 @@ export const getProductFromDB = async (): Promise<ProductType[]> => {
     throw error;
   }
 };
-export const getProductbyIdFromDB = async (id: string) => {
+export const getProductByIdFromDB = async (id: string) => {
   try {
     return await productModel.findOne({ product_id: id });
   } catch (error) {
     logger.error(`Cannot get data from MongoDB: \n${error}`);
+    throw error;
+  }
+};
+export const updateProductByIdFromDB = async (
+  id: string,
+  payload: ProductType,
+) => {
+  try {
+    return await productModel.findOneAndUpdate(
+      { product_id: id },
+      { $set: payload },
+    );
+  } catch (error) {
+    logger.error(`Cannot update data from MongoDB: \n${error}`);
     throw error;
   }
 };
