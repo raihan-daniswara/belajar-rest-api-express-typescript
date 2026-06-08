@@ -1,6 +1,6 @@
-import mongoose, { type InferSchemaType } from "mongoose";
+import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
+export const productSchema = new mongoose.Schema(
   {
     product_id: {
       type: String,
@@ -18,8 +18,6 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-
-export type ProductType = InferSchemaType<typeof productSchema>;
 
 const productModel = mongoose.model("product", productSchema);
 
