@@ -17,7 +17,7 @@ export const createProduct = async (req: Request, res: Response) => {
   req.body.product_id = uuidV7();
   const { error, value } = createProductValidation(req.body);
   if (error) {
-    logger.error(`ERR: product = create failed: ${error.details[0]?.message}`);
+    logger.error(`ERR: Product - Create failed: ${error.details[0]?.message}`);
     return res.status(422).json({
       success: false,
       statusCode: 422,
@@ -96,7 +96,7 @@ export const updateProduct = async (
   const id = req.params.id;
   const { error, value } = updateProductValidation(req.body);
   if (error) {
-    logger.error(`ERR: product = create failed: ${error.details[0]?.message}`);
+    logger.error(`ERR: Product - Update failed: ${error.details[0]?.message}`);
     return res.status(422).json({
       success: false,
       statusCode: 422,
