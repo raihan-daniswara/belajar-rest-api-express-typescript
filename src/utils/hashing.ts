@@ -5,3 +5,7 @@ export const hashPassword = async (password: string) => {
     cost: 10,
   });
 };
+
+export const checkPassword = async (password: string, userPassword: string) => {
+  return await Bun.password.verify(password, userPassword, "bcrypt");
+};

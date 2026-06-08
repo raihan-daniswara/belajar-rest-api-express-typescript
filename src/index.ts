@@ -1,20 +1,33 @@
-import type { Application, Router } from "express";
-import { healthRouter } from "./routes/health.route";
-import { productsRouter } from "./routes/product.route";
+import express, {
+  type Application,
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
+import { routes } from "./routes/index";
+import { logger } from "./utils/logger";
+import bodyParser from "body-parser";
+import cors from "cors";
 import "./utils/connectDB";
-import { authRouter } from "./routes/auth.route";
+import deserializeToken from "./middleware/deserializedToken";
 
-type AppRoute = [string, Router];
+const app: Application = express();
+const port: number = Number(process.env.port);
 
-const _routes: AppRoute[] = [
-  ["/health", healthRouter],
-  ["/products", productsRouter],
-  ["/auth", authRouter],
-];
+// parse body request
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-export const routes = (app: Application): void => {
-  _routes.forEach((route) => {
-    const [url, router]: AppRoute = route;
-    app.use(url, router);
-  });
-};
+// cors access handler
+app.use(cors());
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next();
+});
+
+app.use(deserializeToken);
+
+routes(app);
+app.listen(port, () => logger.info(`Server is running at port ${port}`));
