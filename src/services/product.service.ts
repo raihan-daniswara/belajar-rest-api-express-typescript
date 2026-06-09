@@ -29,6 +29,7 @@ export const updateProductByIdFromDB = async (
     return await productModel.findOneAndUpdate(
       { product_id: id },
       { $set: payload },
+      { returnDocument: "after", runValidators: true },
     );
   } catch (error) {
     logger.error(`Cannot update data from MongoDB: \n${error}`);

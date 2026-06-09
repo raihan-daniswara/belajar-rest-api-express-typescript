@@ -19,7 +19,6 @@ export const requireAdmin = (
   next: NextFunction,
 ) => {
   const user = res.locals.user;
-  console.log(res.locals.user);
   if (!user || user._doc.role !== "admin") {
     return res.sendStatus(403);
   } else {

@@ -2,7 +2,6 @@ import type { Application, Router } from "express";
 import { healthRouter } from "./health.route";
 import { productsRouter } from "./product.route";
 import { authRouter } from "./auth.route";
-import "../utils/connectDB";
 
 type AppRoute = [string, Router];
 

@@ -9,6 +9,8 @@
     "start": "bun dist/index.js",
     "check-types": "tsc --noEmit",
     "format": "prettier --write .",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -23,11 +25,14 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/supertest": "^7.2.0",
     "@types/uuid": "^11.0.0",
     "eslint": "^10.4.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
+    "mongodb-memory-server": "^11.2.0",
     "prettier": "^3.8.3",
+    "supertest": "^7.2.2",
     "typescript-eslint": "^8.60.0"
   },
   "peerDependencies": {
