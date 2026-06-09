@@ -8,6 +8,7 @@
     "build": "bun build src/index.ts --outdir dist --target bun",
     "start": "bun dist/index.js",
     "check-types": "tsc --noEmit",
+    "format": "prettier --write .",
     "prepare": "husky"
   },
   "lint-staged": {
